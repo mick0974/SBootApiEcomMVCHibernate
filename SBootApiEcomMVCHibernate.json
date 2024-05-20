@@ -1,0 +1,5179 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "info": {
+    "title": "REST API",
+    "version": "",
+    "description": "REST API"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "operationId": "em12",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.pages.HomeDtoResponse",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "/addresses": {
+      "get": {
+        "description": "",
+        "operationId": "em28",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.addresses.AddressListDto",
+                  "properties": {
+                    "addressDtos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "operationId": "em25",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.auth.JwtResponse",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.auth.partials.UserJwtResponse",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "token": {
+                          "type": "string"
+                        },
+                        "roles": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "scheme": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 2
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1auth~1login/post"
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "",
+        "operationId": "em24",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.ErrorResponse",
+                  "properties": {
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "passswordConfirmation": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 6
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1auth~1register/post"
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "description": "",
+        "operationId": "em2",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 8
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.categories.CategoriesListResponse",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "em4",
+        "parameters": [
+          {
+            "name": "images[]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.categories.SingleCategoryDto",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "imageUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 2
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1categories/post"
+        }
+      }
+    },
+    "/comments/from_product/{product_slug}": {
+      "get": {
+        "description": "",
+        "operationId": "em18",
+        "parameters": [
+          {
+            "name": "product_slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.CommentListResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1comments~1from_product~1{product_slug}/get"
+        }
+      }
+    },
+    "/comments/from_user/{user_id}": {
+      "get": {
+        "description": "",
+        "operationId": "em20",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.CommentListResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1comments~1from_user~1{user_id}/get"
+        }
+      }
+    },
+    "/comments/products/{slug}/comments": {
+      "post": {
+        "description": "",
+        "operationId": "em21",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.SingleCommentDto",
+                  "properties": {
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "productId": {
+                      "type": "integer"
+                    },
+                    "user": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.users.partials.UserIdAndUsernameDto",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.ErrorResponse",
+                  "properties": {
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 1
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1comments~1products~1{slug}~1comments/post"
+        }
+      }
+    },
+    "/comments/{id}": {
+      "delete": {
+        "description": "",
+        "operationId": "em23",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.SuccessResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1comments~1{id}/delete"
+        }
+      },
+      "get": {
+        "description": "",
+        "operationId": "em19",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.SingleCommentDto",
+                  "properties": {
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "productId": {
+                      "type": "integer"
+                    },
+                    "user": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.users.partials.UserIdAndUsernameDto",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "operationId": "em22",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.SingleCommentDto",
+                  "properties": {
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "productId": {
+                      "type": "integer"
+                    },
+                    "user": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.users.partials.UserIdAndUsernameDto",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 1
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1comments~1{id}/put"
+        }
+      }
+    },
+    "/home": {
+      "get": {
+        "description": "",
+        "operationId": "em13",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.pages.HomeDtoResponse",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "/login": {
+      "get": {
+        "description": "",
+        "operationId": "em17",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "/my_addresses": {
+      "get": {
+        "description": "",
+        "operationId": "em27",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.addresses.AddressListDto",
+                  "properties": {
+                    "addressDtos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "description": "",
+        "operationId": "em14",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "FORBIDDEN",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.ErrorResponse",
+                  "properties": {
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1orders/get"
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "em16",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.OrderSingleResponse",
+                  "properties": {
+                    "orderStatus": {
+                      "type": "string"
+                    },
+                    "trackingNumber": {
+                      "type": "string"
+                    },
+                    "orderItems": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "orderAddressInfoDto": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.partials.OrderAddressInfoDto",
+                      "properties": {
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "zipCode": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  },
+                  "addressId": {
+                    "type": "integer"
+                  },
+                  "cardNumber": {
+                    "type": "string"
+                  },
+                  "cartItems": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "zipCode": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 10
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1orders/post"
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "description": "",
+        "operationId": "em15",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.OrderSingleResponse",
+                  "properties": {
+                    "orderStatus": {
+                      "type": "string"
+                    },
+                    "trackingNumber": {
+                      "type": "string"
+                    },
+                    "orderItems": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "orderAddressInfoDto": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.partials.OrderAddressInfoDto",
+                      "properties": {
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "zipCode": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1orders~1{id}/get"
+        }
+      }
+    },
+    "/tags": {
+      "get": {
+        "description": "",
+        "operationId": "em1",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 8
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.tags.TagsListResponse",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "em3",
+        "parameters": [
+          {
+            "name": "images[]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.tags.SingleTagDto",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "imageUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 2
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1tags/post"
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "",
+        "operationId": "em0",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.ErrorResponse",
+                  "properties": {
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "passswordConfirmation": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 6
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1users/post"
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "description": "",
+        "operationId": "em26",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.auth.JwtResponse",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.auth.partials.UserJwtResponse",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "token": {
+                          "type": "string"
+                        },
+                        "roles": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "scheme": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 2
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/~1auth~1login/post"
+        }
+      }
+    },
+    "admin": {
+      "get": {
+        "description": "",
+        "operationId": "em41",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.admin.AdminDashboardResponse",
+                  "properties": {
+                    "productDataSection": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.ProductListResponse",
+                      "properties": {
+                        "pageMeta": {
+                          "type": "object",
+                          "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                          "properties": {
+                            "hasNextPage": {
+                              "type": "boolean"
+                            },
+                            "hasPrevPage": {
+                              "type": "boolean"
+                            },
+                            "requestedPageSize": {
+                              "type": "integer"
+                            },
+                            "currentPageNumber": {
+                              "type": "integer"
+                            },
+                            "numberOfPages": {
+                              "type": "integer"
+                            },
+                            "currentItemsCount": {
+                              "type": "integer"
+                            },
+                            "totalItemsCount": {
+                              "type": "integer"
+                            },
+                            "offset": {
+                              "type": "integer"
+                            },
+                            "nextPageNumber": {
+                              "type": "integer"
+                            },
+                            "prevPageNumber": {
+                              "type": "integer"
+                            },
+                            "nextPageUrl": {
+                              "type": "string"
+                            },
+                            "prevPageUrl": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "products": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "commentsData": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.CommentListResponse",
+                      "properties": {
+                        "pageMeta": {
+                          "type": "object",
+                          "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                          "properties": {
+                            "hasNextPage": {
+                              "type": "boolean"
+                            },
+                            "hasPrevPage": {
+                              "type": "boolean"
+                            },
+                            "requestedPageSize": {
+                              "type": "integer"
+                            },
+                            "currentPageNumber": {
+                              "type": "integer"
+                            },
+                            "numberOfPages": {
+                              "type": "integer"
+                            },
+                            "currentItemsCount": {
+                              "type": "integer"
+                            },
+                            "totalItemsCount": {
+                              "type": "integer"
+                            },
+                            "offset": {
+                              "type": "integer"
+                            },
+                            "nextPageNumber": {
+                              "type": "integer"
+                            },
+                            "prevPageNumber": {
+                              "type": "integer"
+                            },
+                            "nextPageUrl": {
+                              "type": "string"
+                            },
+                            "prevPageUrl": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "comments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "orderDataSection": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.OrderListResponse",
+                      "properties": {
+                        "pageMeta": {
+                          "type": "object",
+                          "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                          "properties": {
+                            "hasNextPage": {
+                              "type": "boolean"
+                            },
+                            "hasPrevPage": {
+                              "type": "boolean"
+                            },
+                            "requestedPageSize": {
+                              "type": "integer"
+                            },
+                            "currentPageNumber": {
+                              "type": "integer"
+                            },
+                            "numberOfPages": {
+                              "type": "integer"
+                            },
+                            "currentItemsCount": {
+                              "type": "integer"
+                            },
+                            "totalItemsCount": {
+                              "type": "integer"
+                            },
+                            "offset": {
+                              "type": "integer"
+                            },
+                            "nextPageNumber": {
+                              "type": "integer"
+                            },
+                            "prevPageNumber": {
+                              "type": "integer"
+                            },
+                            "nextPageUrl": {
+                              "type": "string"
+                            },
+                            "prevPageUrl": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "orders": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    },
+                    "usersData": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.admin.UsersDataSection",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "pageMeta": {
+                          "type": "object",
+                          "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                          "properties": {
+                            "hasNextPage": {
+                              "type": "boolean"
+                            },
+                            "hasPrevPage": {
+                              "type": "boolean"
+                            },
+                            "requestedPageSize": {
+                              "type": "integer"
+                            },
+                            "currentPageNumber": {
+                              "type": "integer"
+                            },
+                            "numberOfPages": {
+                              "type": "integer"
+                            },
+                            "currentItemsCount": {
+                              "type": "integer"
+                            },
+                            "totalItemsCount": {
+                              "type": "integer"
+                            },
+                            "offset": {
+                              "type": "integer"
+                            },
+                            "nextPageNumber": {
+                              "type": "integer"
+                            },
+                            "prevPageNumber": {
+                              "type": "integer"
+                            },
+                            "nextPageUrl": {
+                              "type": "string"
+                            },
+                            "prevPageUrl": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin/get"
+        }
+      }
+    },
+    "admin/orders": {
+      "get": {
+        "description": "",
+        "operationId": "em39",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.OrderListResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin~1orders/get"
+        }
+      }
+    },
+    "admin/orders/{id}": {
+      "put": {
+        "description": "",
+        "operationId": "em40",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.OrderSingleResponse",
+                  "properties": {
+                    "orderStatus": {
+                      "type": "string"
+                    },
+                    "trackingNumber": {
+                      "type": "string"
+                    },
+                    "orderItems": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "orderAddressInfoDto": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.orders.partials.OrderAddressInfoDto",
+                      "properties": {
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "zipCode": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "orderStatus": {
+                    "type": "string"
+                  },
+                  "trackingNumber": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 2
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin~1orders~1{id}/put"
+        }
+      }
+    },
+    "admin/roles": {
+      "get": {
+        "description": "",
+        "operationId": "em34",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.admin.RolesDtoResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin~1roles/get"
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "em37",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.roles.RoleDetailsResponse",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "usersBelongingToThis": {
+                      "type": "integer"
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    "admin/roles/by_id/{id}": {
+      "get": {
+        "description": "",
+        "operationId": "em36",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.roles.RoleDetailsResponse",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "usersBelongingToThis": {
+                      "type": "integer"
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "admin/roles/by_name/{name}": {
+      "get": {
+        "description": "",
+        "operationId": "em35",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.roles.RoleDetailsResponse",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "usersBelongingToThis": {
+                      "type": "integer"
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin~1roles~1by_name~1{name}/get"
+        }
+      }
+    },
+    "admin/roles/{id}": {
+      "put": {
+        "description": "",
+        "operationId": "em38",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.roles.RoleDetailsResponse",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "usersBelongingToThis": {
+                      "type": "integer"
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 3
+              }
+            }
+          }
+        }
+      }
+    },
+    "admin/users": {
+      "get": {
+        "description": "",
+        "operationId": "em29",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.admin.dtos.users.AdminUsersListResponse",
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin~1users/get"
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "em30",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.UserDetailsDto",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "passwordConfirmation": {
+                    "type": "string"
+                  },
+                  "roles": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 7
+              }
+            }
+          }
+        }
+      }
+    },
+    "admin/users/{id}": {
+      "get": {
+        "description": "",
+        "operationId": "em31",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.UserDetailsDto",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "operationId": "em32",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.UserDetailsDto",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.ErrorResponse",
+                  "properties": {
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "passwordConfirmation": {
+                    "type": "string"
+                  },
+                  "roles": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 7
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/admin~1users~1{id}/put"
+        }
+      }
+    },
+    "admin/users/{id}/delete": {
+      "post": {
+        "description": "",
+        "operationId": "em33",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "products": {
+      "get": {
+        "description": "",
+        "operationId": "em5",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 8
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.ProductListResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/products/get"
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "em10",
+        "parameters": [
+          {
+            "name": "images[]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.SingleProductResponse",
+                  "properties": {
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "imageUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "authInfo": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.SingleProductResponse$AuthInfo",
+                      "properties": {
+                        "canEdit": {
+                          "type": "boolean"
+                        },
+                        "canDelete": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/products/post"
+        }
+      }
+    },
+    "products/by_category/{category_name}": {
+      "get": {
+        "description": "",
+        "operationId": "em7",
+        "parameters": [
+          {
+            "name": "category_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.ProductListResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/products~1by_category~1{category_name}/get"
+        }
+      }
+    },
+    "products/by_id/{id}": {
+      "get": {
+        "description": "",
+        "operationId": "em9",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.SingleProductResponse",
+                  "properties": {
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "imageUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "authInfo": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.SingleProductResponse$AuthInfo",
+                      "properties": {
+                        "canEdit": {
+                          "type": "boolean"
+                        },
+                        "canDelete": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "products/by_tag/{tag_name}": {
+      "get": {
+        "description": "",
+        "operationId": "em6",
+        "parameters": [
+          {
+            "name": "tag_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.ProductListResponse",
+                  "properties": {
+                    "pageMeta": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.shared.PageMeta",
+                      "properties": {
+                        "hasNextPage": {
+                          "type": "boolean"
+                        },
+                        "hasPrevPage": {
+                          "type": "boolean"
+                        },
+                        "requestedPageSize": {
+                          "type": "integer"
+                        },
+                        "currentPageNumber": {
+                          "type": "integer"
+                        },
+                        "numberOfPages": {
+                          "type": "integer"
+                        },
+                        "currentItemsCount": {
+                          "type": "integer"
+                        },
+                        "totalItemsCount": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "nextPageNumber": {
+                          "type": "integer"
+                        },
+                        "prevPageNumber": {
+                          "type": "integer"
+                        },
+                        "nextPageUrl": {
+                          "type": "string"
+                        },
+                        "prevPageUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/products~1by_tag~1{tag_name}/get"
+        }
+      }
+    },
+    "products/{slug}": {
+      "get": {
+        "description": "",
+        "operationId": "em8",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.SingleProductResponse",
+                  "properties": {
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "imageUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "authInfo": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.products.SingleProductResponse$AuthInfo",
+                      "properties": {
+                        "canEdit": {
+                          "type": "boolean"
+                        },
+                        "canDelete": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "others"
+          }
+        }
+      }
+    },
+    "products/{slug}/comments": {
+      "post": {
+        "description": "",
+        "operationId": "em11",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.comments.partials.CommentPartialDto",
+                  "properties": {
+                    "updatedAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "object",
+                      "title": "java.time.ZonedDateTime",
+                      "properties": {
+                        "dateTime": {
+                          "type": "object",
+                          "title": "java.time.LocalDateTime",
+                          "properties": {
+                            "date": {
+                              "type": "object",
+                              "title": "java.time.LocalDate",
+                              "properties": {
+                                "year": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "day": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "time": {
+                              "type": "object",
+                              "title": "java.time.LocalTime",
+                              "properties": {
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "second": {
+                                  "type": "integer"
+                                },
+                                "nano": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "offset": {
+                          "type": "object",
+                          "title": "java.time.ZoneOffset",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "zone": {
+                          "type": "object",
+                          "title": "java.time.ZoneId",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "productId": {
+                      "type": "integer"
+                    },
+                    "user": {
+                      "type": "object",
+                      "title": "com.melardev.spring.shoppingcartweb.dtos.response.users.partials.UserIdAndUsernameDto",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "com.melardev.spring.shoppingcartweb.dtos.response.base.ErrorResponse",
+                  "properties": {
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL_SERVER_ERROR"
+          },
+          "default": {
+            "description": "others"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "maxProperties": 1
+              }
+            }
+          }
+        },
+        "x-endpoint-constraints": {
+          "$ref": "#/components/x-endpoint-constraints/products~1{slug}~1comments/post"
+        }
+      }
+    }
+  },
+  "components": {
+    "x-endpoint-constraints": {
+      "/auth/login": {
+        "post": {
+          "global-reads": {
+            "g15": {
+              "name": "HS512",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g15"
+              }
+            },
+            "g16": {
+              "name": "DAYS",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g16"
+              }
+            }
+          }
+        }
+      },
+      "/auth/register": {
+        "post": {
+          "valid-path-conditions": [
+            "( this.<com.melardev.spring.shoppingcartweb.services.auth.UsersService: com.melardev.spring.shoppingcartweb.repository.UsersRepository userRepository>.<com.melardev.spring.shoppingcartweb.repository.UsersRepository: java.util.Optional findByEmail(java.lang.String)>({non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.RegisterDto: java.lang.String getEmail()>()).<java.util.Optional: boolean isPresent()>() == 0 )",
+            "( this.<com.melardev.spring.shoppingcartweb.services.auth.UsersService: com.melardev.spring.shoppingcartweb.repository.UsersRepository userRepository>.<com.melardev.spring.shoppingcartweb.repository.UsersRepository: java.util.Optional findByUsername(java.lang.String)>({non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.RegisterDto: java.lang.String getUsername()>()).<java.util.Optional: boolean isPresent()>() == 0 )"
+          ],
+          "global-reads": {
+            "g0": {
+              "name": "BAD_REQUEST",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g0"
+              }
+            },
+            "g1": {
+              "name": "OK",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g1"
+              }
+            }
+          }
+        }
+      },
+      "/categories": {
+        "post": {
+          "global-reads": {
+            "g2": {
+              "name": "CREATED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g2"
+              }
+            },
+            "g3": {
+              "name": "INTERNAL_SERVER_ERROR",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g3"
+              }
+            },
+            "g4": {
+              "name": "separator",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g4"
+              }
+            },
+            "g5": {
+              "name": "CREATE",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g5"
+              }
+            },
+            "g6": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g6"
+              }
+            }
+          }
+        }
+      },
+      "/comments/from_product/{product_slug}": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        }
+      },
+      "/comments/from_user/{user_id}": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        }
+      },
+      "/comments/products/{slug}/comments": {
+        "post": {
+          "global-reads": {
+            "g0": {
+              "name": "BAD_REQUEST",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g0"
+              }
+            },
+            "g5": {
+              "name": "CREATE",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g5"
+              }
+            },
+            "g8": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$AuthorizationPolicy",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g8"
+              }
+            },
+            "g12": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g12"
+              }
+            }
+          }
+        }
+      },
+      "/comments/{id}": {
+        "delete": {
+          "valid-path-conditions": [
+            "( (com.melardev.spring.shoppingcartweb.models.Comment) this.<com.melardev.spring.shoppingcartweb.services.CommentsService: com.melardev.spring.shoppingcartweb.repository.CommentsRepository commentsRepository>.<com.melardev.spring.shoppingcartweb.repository.CommentsRepository: java.util.Optional findById(java.lang.Object)>({id}).<java.util.Optional: java.lang.Object orElseThrow(java.util.function.Supplier)>(staticinvoke <com.melardev.spring.shoppingcartweb.services.CommentsService$init__7: java.util.function.Supplier bootstrap$()>()) != null )"
+          ],
+          "global-reads": {
+            "g8": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$AuthorizationPolicy",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g8"
+              }
+            },
+            "g12": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g12"
+              }
+            },
+            "g14": {
+              "name": "DELETE",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g14"
+              }
+            }
+          }
+        },
+        "put": {
+          "global-reads": {
+            "g8": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$AuthorizationPolicy",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g8"
+              }
+            },
+            "g12": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g12"
+              }
+            },
+            "g13": {
+              "name": "UPDATE",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g13"
+              }
+            }
+          }
+        }
+      },
+      "/orders": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            },
+            "g10": {
+              "name": "FORBIDDEN",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g10"
+              }
+            },
+            "g11": {
+              "name": "PROCESSED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g11"
+              }
+            }
+          }
+        },
+        "post": {
+          "valid-path-conditions": [
+            "( this.<com.melardev.spring.shoppingcartweb.services.ProductsService: com.melardev.spring.shoppingcartweb.repository.ProductsRepository productsRepository>.<com.melardev.spring.shoppingcartweb.repository.ProductsRepository: java.util.List findBasicInfoWhereProductIds(java.util.List)>((java.util.List) {non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.orders.CheckoutDto: java.util.Collection getCartItems()>().<java.util.Collection: java.util.stream.Stream stream()>().<java.util.stream.Stream: java.util.stream.Stream map(java.util.function.Function)>(staticinvoke <com.melardev.spring.shoppingcartweb.services.OrdersService$lambda_save_2__25: java.util.function.Function bootstrap$()>()).<java.util.stream.Stream: java.lang.Object collect(java.util.stream.Collector)>(staticinvoke <java.util.stream.Collectors: java.util.stream.Collector toList()>())).<java.util.List: int size()>() == {non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.orders.CheckoutDto: java.util.Collection getCartItems()>().<java.util.Collection: int size()>() ) && ( this.<com.melardev.spring.shoppingcartweb.services.ProductsService: com.melardev.spring.shoppingcartweb.repository.ProductsRepository productsRepository>.<com.melardev.spring.shoppingcartweb.repository.ProductsRepository: java.util.List findBasicInfoWhereProductIds(java.util.List)>((java.util.List) {non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.orders.CheckoutDto: java.util.Collection getCartItems()>().<java.util.Collection: java.util.stream.Stream stream()>().<java.util.stream.Stream: java.util.stream.Stream map(java.util.function.Function)>(staticinvoke <com.melardev.spring.shoppingcartweb.services.OrdersService$lambda_save_2__25: java.util.function.Function bootstrap$()>()).<java.util.stream.Stream: java.lang.Object collect(java.util.stream.Collector)>(staticinvoke <java.util.stream.Collectors: java.util.stream.Collector toList()>())) != null )"
+          ],
+          "global-reads": {
+            "g11": {
+              "name": "PROCESSED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g11"
+              }
+            }
+          }
+        }
+      },
+      "/orders/{id}": {
+        "get": {
+          "valid-path-conditions": [
+            "( ((com.melardev.spring.shoppingcartweb.models.Order) this.<com.melardev.spring.shoppingcartweb.services.OrdersService: com.melardev.spring.shoppingcartweb.repository.OrdersRepository ordersRepository>.<com.melardev.spring.shoppingcartweb.repository.OrdersRepository: java.util.Optional findById(java.lang.Object)>({id}).<java.util.Optional: java.lang.Object orElse(java.lang.Object)>(null)).<com.melardev.spring.shoppingcartweb.models.Order: com.melardev.spring.shoppingcartweb.models.User getUser()>().<com.melardev.spring.shoppingcartweb.models.User: java.lang.Long getId()>().<java.lang.Long: boolean equals(java.lang.Object)>(this.<com.melardev.spring.shoppingcartweb.controllers.OrdersController: com.melardev.spring.shoppingcartweb.services.auth.UsersService userService>.<com.melardev.spring.shoppingcartweb.services.auth.UsersService: com.melardev.spring.shoppingcartweb.models.User getCurrentLoggedInUser()>().<com.melardev.spring.shoppingcartweb.models.User: java.lang.Long getId()>()) != 0 )",
+            "( ((com.melardev.spring.shoppingcartweb.models.User) ((org.springframework.security.authentication.UsernamePasswordAuthenticationToken) {non_EPP#1}).<org.springframework.security.authentication.UsernamePasswordAuthenticationToken: java.lang.Object getPrincipal()>()).<com.melardev.spring.shoppingcartweb.models.User: java.util.Collection getAuthorities()>().<java.util.Collection: java.util.stream.Stream stream()>().<java.util.stream.Stream: boolean anyMatch(java.util.function.Predicate)>(staticinvoke <com.melardev.spring.shoppingcartweb.services.auth.UsersService$lambda_isUserInRole_7__18: java.util.function.Predicate bootstrap$(java.lang.String)>(this.<com.melardev.spring.shoppingcartweb.services.auth.UsersService: com.melardev.spring.shoppingcartweb.services.SettingsService settingsService>.<com.melardev.spring.shoppingcartweb.services.SettingsService: java.lang.String getAdminRoleName()>())) != 0 )",
+            "( this.<com.melardev.spring.shoppingcartweb.services.OrdersService: com.melardev.spring.shoppingcartweb.repository.OrdersRepository ordersRepository>.<com.melardev.spring.shoppingcartweb.repository.OrdersRepository: java.util.Optional findById(java.lang.Object)>({id}).<java.util.Optional: boolean isPresent()>() != 0 )"
+          ],
+          "global-reads": {
+            "g11": {
+              "name": "PROCESSED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g11"
+              }
+            }
+          }
+        }
+      },
+      "/tags": {
+        "post": {
+          "global-reads": {
+            "g2": {
+              "name": "CREATED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g2"
+              }
+            },
+            "g3": {
+              "name": "INTERNAL_SERVER_ERROR",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g3"
+              }
+            },
+            "g4": {
+              "name": "separator",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g4"
+              }
+            },
+            "g5": {
+              "name": "CREATE",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g5"
+              }
+            },
+            "g6": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g6"
+              }
+            }
+          }
+        }
+      },
+      "/users": {
+        "post": {
+          "valid-path-conditions": [
+            "( this.<com.melardev.spring.shoppingcartweb.services.auth.UsersService: com.melardev.spring.shoppingcartweb.repository.UsersRepository userRepository>.<com.melardev.spring.shoppingcartweb.repository.UsersRepository: java.util.Optional findByEmail(java.lang.String)>({non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.RegisterDto: java.lang.String getEmail()>()).<java.util.Optional: boolean isPresent()>() == 0 )",
+            "( this.<com.melardev.spring.shoppingcartweb.services.auth.UsersService: com.melardev.spring.shoppingcartweb.repository.UsersRepository userRepository>.<com.melardev.spring.shoppingcartweb.repository.UsersRepository: java.util.Optional findByUsername(java.lang.String)>({non_EPP#0}.<com.melardev.spring.shoppingcartweb.dtos.request.RegisterDto: java.lang.String getUsername()>()).<java.util.Optional: boolean isPresent()>() == 0 )"
+          ],
+          "global-reads": {
+            "g0": {
+              "name": "BAD_REQUEST",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g0"
+              }
+            },
+            "g1": {
+              "name": "OK",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g1"
+              }
+            }
+          }
+        }
+      },
+      "admin": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            },
+            "g11": {
+              "name": "PROCESSED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g11"
+              }
+            }
+          }
+        }
+      },
+      "admin/orders": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            },
+            "g11": {
+              "name": "PROCESSED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g11"
+              }
+            }
+          }
+        }
+      },
+      "admin/orders/{id}": {
+        "put": {
+          "global-reads": {
+            "g11": {
+              "name": "PROCESSED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g11"
+              }
+            }
+          }
+        }
+      },
+      "admin/roles": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        }
+      },
+      "admin/roles/by_name/{name}": {
+        "get": {
+          "valid-path-conditions": [
+            "( this.<com.melardev.spring.shoppingcartweb.services.RolesService: com.melardev.spring.shoppingcartweb.repository.RolesRepository rolesRepository>.<com.melardev.spring.shoppingcartweb.repository.RolesRepository: java.util.Optional findByName(java.lang.String)>({name}).<java.util.Optional: boolean isPresent()>() != 0 )"
+          ]
+        }
+      },
+      "admin/users": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        }
+      },
+      "admin/users/{id}": {
+        "put": {
+          "global-reads": {
+            "g0": {
+              "name": "BAD_REQUEST",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g0"
+              }
+            },
+            "g1": {
+              "name": "OK",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g1"
+              }
+            }
+          }
+        }
+      },
+      "products": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        },
+        "post": {
+          "global-reads": {
+            "g2": {
+              "name": "CREATED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g2"
+              }
+            },
+            "g4": {
+              "name": "separator",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g4"
+              }
+            }
+          }
+        }
+      },
+      "products/by_category/{category_name}": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        }
+      },
+      "products/by_tag/{tag_name}": {
+        "get": {
+          "global-reads": {
+            "g7": {
+              "name": "DESC",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g7"
+              }
+            }
+          }
+        }
+      },
+      "products/{slug}/comments": {
+        "post": {
+          "global-reads": {
+            "g0": {
+              "name": "BAD_REQUEST",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g0"
+              }
+            },
+            "g2": {
+              "name": "CREATED",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g2"
+              }
+            },
+            "g5": {
+              "name": "CREATE",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g5"
+              }
+            },
+            "g8": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$AuthorizationPolicy",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g8"
+              }
+            },
+            "g9": {
+              "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+              "location-details": {
+                "$ref": "#/components/x-global-variables-info/g9"
+              }
+            }
+          }
+        }
+      }
+    },
+    "x-endpoint-interdependence": {},
+    "x-global-variables-info": {
+      "g0": {
+        "name": "BAD_REQUEST",
+        "id": "g0",
+        "defining-class": "org.springframework.http.HttpStatus"
+      },
+      "g1": {
+        "name": "OK",
+        "id": "g1",
+        "defining-class": "org.springframework.http.HttpStatus"
+      },
+      "g2": {
+        "name": "CREATED",
+        "id": "g2",
+        "defining-class": "org.springframework.http.HttpStatus"
+      },
+      "g3": {
+        "name": "INTERNAL_SERVER_ERROR",
+        "id": "g3",
+        "defining-class": "org.springframework.http.HttpStatus"
+      },
+      "g4": {
+        "name": "separator",
+        "id": "g4",
+        "defining-class": "java.io.File"
+      },
+      "g5": {
+        "name": "CREATE",
+        "id": "g5",
+        "defining-class": "com.melardev.spring.shoppingcartweb.enums.CrudOperation",
+        "locations-of-static-assignments": [
+          "line 4, com.melardev.spring.shoppingcartweb.enums.CrudOperation"
+        ]
+      },
+      "g6": {
+        "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+        "id": "g6",
+        "defining-class": "com.melardev.spring.shoppingcartweb.controllers.TagsAndCategoriesController$1",
+        "locations-of-static-assignments": [
+          "line 125, com.melardev.spring.shoppingcartweb.controllers.TagsAndCategoriesController$1"
+        ]
+      },
+      "g7": {
+        "name": "DESC",
+        "id": "g7",
+        "defining-class": "org.springframework.data.domain.Sort$Direction"
+      },
+      "g8": {
+        "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$AuthorizationPolicy",
+        "id": "g8",
+        "defining-class": "com.melardev.spring.shoppingcartweb.services.auth.delegates.CommentsAuthorizationDelegate$1",
+        "locations-of-static-assignments": [
+          "line 38, com.melardev.spring.shoppingcartweb.services.auth.delegates.CommentsAuthorizationDelegate$1"
+        ]
+      },
+      "g9": {
+        "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+        "id": "g9",
+        "defining-class": "com.melardev.spring.shoppingcartweb.controllers.ProductsController$1",
+        "locations-of-static-assignments": [
+          "line 258, com.melardev.spring.shoppingcartweb.controllers.ProductsController$1"
+        ]
+      },
+      "g10": {
+        "name": "FORBIDDEN",
+        "id": "g10",
+        "defining-class": "org.springframework.http.HttpStatus"
+      },
+      "g11": {
+        "name": "PROCESSED",
+        "id": "g11",
+        "defining-class": "com.melardev.spring.shoppingcartweb.enums.OrderStatus",
+        "locations-of-static-assignments": [
+          "line 4, com.melardev.spring.shoppingcartweb.enums.OrderStatus"
+        ]
+      },
+      "g12": {
+        "name": "$SwitchMap$com$melardev$spring$shoppingcartweb$enums$CrudOperation",
+        "id": "g12",
+        "defining-class": "com.melardev.spring.shoppingcartweb.controllers.CommentsController$1",
+        "locations-of-static-assignments": [
+          "line 132, com.melardev.spring.shoppingcartweb.controllers.CommentsController$1"
+        ]
+      },
+      "g13": {
+        "name": "UPDATE",
+        "id": "g13",
+        "defining-class": "com.melardev.spring.shoppingcartweb.enums.CrudOperation",
+        "locations-of-static-assignments": [
+          "line 4, com.melardev.spring.shoppingcartweb.enums.CrudOperation"
+        ]
+      },
+      "g14": {
+        "name": "DELETE",
+        "id": "g14",
+        "defining-class": "com.melardev.spring.shoppingcartweb.enums.CrudOperation",
+        "locations-of-static-assignments": [
+          "line 4, com.melardev.spring.shoppingcartweb.enums.CrudOperation"
+        ]
+      },
+      "g15": {
+        "name": "HS512",
+        "id": "g15",
+        "defining-class": "io.jsonwebtoken.SignatureAlgorithm"
+      },
+      "g16": {
+        "name": "DAYS",
+        "id": "g16",
+        "defining-class": "java.time.temporal.ChronoUnit"
+      }
+    }
+  }
+}
