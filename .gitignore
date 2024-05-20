@@ -1,5 +1,4 @@
 /uploads/
-/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -19,7 +18,6 @@
 
 ### NetBeans ###
 /nbproject/private/
-/build/
 /nbbuild/
 /dist/
 /nbdist/
@@ -29,7 +27,6 @@
 # https://github.com/github/gitignore/blob/master/Java.gitignore
 
 # Compiled class file
-*.class
 
 # Log file
 *.log
