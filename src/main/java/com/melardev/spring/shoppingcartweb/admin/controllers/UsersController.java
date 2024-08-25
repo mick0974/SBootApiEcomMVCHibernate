@@ -41,7 +41,7 @@ public class UsersController {
     @GetMapping
     public AdminUsersListResponse index(HttpServletRequest request,
                                         @RequestParam(value = "page", defaultValue = "1") int page,
-                                        @RequestParam(value = "page_size", defaultValue = "30") int pageSize) {
+                                        @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
 
         Page<User> usersPage = this.usersService.getLatest(page, pageSize);
         return AdminUsersListResponse.build(usersPage, request.getRequestURI());

@@ -31,7 +31,7 @@ public class RolesController {
     @GetMapping
     public RolesDtoResponse index(HttpServletRequest request,
                                   @RequestParam(value = "page", defaultValue = "1") int page,
-                                  @RequestParam(value = "page_size", defaultValue = "30") int pageSize) {
+                                  @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
         Page<Role> rolesPage = this.rolesService.findAll(page, pageSize);
         return RolesDtoResponse.build(rolesPage, request.getRequestURI());
     }

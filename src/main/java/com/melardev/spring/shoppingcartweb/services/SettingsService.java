@@ -24,7 +24,8 @@ public class SettingsService implements ISettingsService {
 
     @Override
     public int getMaxCommentsToSeed() {
-        return 17;
+        // return 17;
+        return 150;
     }
 
     @Override
@@ -34,17 +35,17 @@ public class SettingsService implements ISettingsService {
 
     @Override
     public int getMaxUsersToSeed() {
-        return 10;
+        return 50;
     }
 
     @Override
     public int getMaxProductsToSeed() {
-        return 25;
+        return 10;
     }
 
     @Override
     public int getMaxTagsToSeed() {
-        return 5;
+        return 10;
     }
 
     @Override

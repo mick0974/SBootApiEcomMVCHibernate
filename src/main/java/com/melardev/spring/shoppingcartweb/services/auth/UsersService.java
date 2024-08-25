@@ -395,6 +395,10 @@ public class UsersService implements UserDetailsService {
     }
 
     public boolean isUserAdmin(User user) {
+        System.out.println("User: " + user.getUsername());
+        System.out.println("role: " + user.getRoles().toString());
+        System.out.println("Auth: " + user.getAuthorities());
+        System.out.println("Is admin: " + this.isUserInRole(user, settingsService.getAdminRoleName()));
         return this.isUserInRole(user, settingsService.getAdminRoleName());
     }
 }

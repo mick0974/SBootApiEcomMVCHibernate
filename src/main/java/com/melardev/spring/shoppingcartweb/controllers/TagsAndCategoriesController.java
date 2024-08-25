@@ -20,16 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class TagsAndCategoriesController {
@@ -51,7 +48,7 @@ public class TagsAndCategoriesController {
 
     @GetMapping("tags")
     public TagsListResponse getTags(@RequestParam(value = "page", defaultValue = "1") int page,
-                                    @RequestParam(value = "page_size", defaultValue = "8") int pageSize,
+                                    @RequestParam(value = "page_size", defaultValue = "500") int pageSize,
                                     HttpServletRequest request) {
 
         List<Tag> tags = tagService.getAllTags();
@@ -61,7 +58,7 @@ public class TagsAndCategoriesController {
 
     @GetMapping("categories")
     public CategoriesListResponse getCategories(@RequestParam(value = "page", defaultValue = "1") int page,
-                                                @RequestParam(value = "page_size", defaultValue = "8") int pageSize,
+                                                @RequestParam(value = "page_size", defaultValue = "500") int pageSize,
                                                 HttpServletRequest request) {
         // Page<Category> categories = categoryService.findLatest(page, pageSize);
         List<Category> categories = categoryService.getAllSummary();
@@ -71,7 +68,8 @@ public class TagsAndCategoriesController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("tags")
-    public ResponseEntity<AppResponse> createTag(HttpServletRequest request, @RequestParam("images[]") MultipartFile[] uploadingFiles) {
+    //public ResponseEntity<AppResponse> createTag(HttpServletRequest request, @RequestParam("images[]") MultipartFile[] uploadingFiles) {
+    public ResponseEntity<AppResponse> createTag(HttpServletRequest request, @RequestParam(name="images[]", required = false) MultipartFile[] uploadingFiles) {
 
         try {
             User user = usersService.getCurrentLoggedInUser();
@@ -81,19 +79,36 @@ public class TagsAndCategoriesController {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
 
-            List<File> files = storageService.upload(uploadingFiles, "/images/tags");
+            //List<File> files = storageService.upload(uploadingFiles, "/images/tags");
+            List<File> files = new LinkedList<>();
 
             Tag tag = tagService.create(name, description, files);
             return new ResponseEntity<>(SingleTagDto.build(tag, true, true), HttpStatus.CREATED);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        /*
+        catch (IOException e) {
+            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+         */
+    }
+
+    static String extractPostRequestBody(HttpServletRequest request) throws IOException {
+        if ("POST".equalsIgnoreCase(request.getMethod())) {
+            Scanner s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
+            return s.hasNext() ? s.next() : "";
+        }
+        return "";
     }
 
     @PreAuthorize("hasRole('ADMIN')") // Remember, if you do not set the prefix, it will add ROLE_ prefix for you
     @PostMapping("categories")
-    public ResponseEntity<AppResponse> createCategory(HttpServletRequest request, @RequestParam("images[]") MultipartFile[] uploadingFiles) {
+    //public ResponseEntity<AppResponse> createCategory(HttpServletRequest request, @RequestParam("images[]") MultipartFile[] uploadingFiles) {
+    public ResponseEntity<AppResponse> createCategory(HttpServletRequest request,
+                                                      @RequestParam(name="images[]", required=false) MultipartFile[] uploadingFiles) {
 
         try {
             User user = usersService.getCurrentLoggedInUser();
@@ -103,14 +118,32 @@ public class TagsAndCategoriesController {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
 
-            List<File> files = storageService.upload(uploadingFiles, "/images/categories");
+            System.out.println("Request: " + request.getParameterMap());
+            for (String key: request.getParameterMap().keySet())
+                System.out.println("key " + key + " -> " + "value : " + Arrays.toString(request.getParameterMap().get(key)));
+
+            System.out.println("Request body: " + extractPostRequestBody(request));
+
+            System.out.println("Request request url: " + request.getRequestURL());
+            System.out.println("Request method: " + request.getMethod());
+            System.out.println("Name posted: " + name);
+            System.out.println("Description posted: " + description);
+
+            // List<File> files = storageService.upload(uploadingFiles, "/images/categories");
+            List<File> files = new LinkedList<>();
 
             Category category = categoryService.create(name, description, files);
             return new ResponseEntity<>(SingleCategoryDto.build(category, true, true), HttpStatus.CREATED);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        /*
+        catch (IOException e) {
+            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+         */
     }
 
     private boolean authorizationCheckOnCategories(CrudOperation crudOperation, User user) {

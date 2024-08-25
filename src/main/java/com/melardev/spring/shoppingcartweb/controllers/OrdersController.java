@@ -44,7 +44,7 @@ public class OrdersController {
     @GetMapping
     public ResponseEntity<AppResponse> index(HttpServletRequest request,
                                              @RequestParam(value = "page", defaultValue = "1") int page,
-                                             @RequestParam(value = "page_size", defaultValue = "30") int pageSize) {
+                                             @RequestParam(value = "page_size", defaultValue = "100") int pageSize) {
 
         if (this.userService.isAnonymous())
             return new ResponseEntity<>(new ErrorResponse("We can not retrieve orders for anonymous users"), HttpStatus.FORBIDDEN);
@@ -61,13 +61,18 @@ public class OrdersController {
             throw new PermissionDeniedException("Not logged in");
 
         Order order = ordersService.findById(id);
-        if (!order.getUser().getId().equals(user.getId()) || !userService.isUserAdmin((User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()))
+        System.out.println("User: " + user.getUsername());
+        System.out.println("role: " + user.getRoles().toString());
+        System.out.println("Auth: " + user.getAuthorities());
+        if (!order.getUser().getId().equals(user.getId()) && !userService.isUserAdmin((User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal())) {
             throw new PermissionDeniedException("You are not authorized");
+        }
         return OrderSingleResponse.build(order);
     }
 
     @PostMapping
     public AppResponse checkout(@RequestBody CheckoutDto form) {
+        System.out.println("post orders body: " + form);
         Order order = this.ordersService.save(form, userService.getCurrentLoggedInUser());
         return OrderSingleResponse.build(order);
     }

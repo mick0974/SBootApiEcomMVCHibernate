@@ -22,7 +22,7 @@ public class OrderController {
     @GetMapping
     public AppResponse index(HttpServletRequest request,
                              @RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "page_size", defaultValue = "30") int pageSize) {
+                             @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
 
         page = Math.max(1, page); // Ensure min 1
         pageSize = Math.max(1, pageSize); // Ensure pageSize min 1

@@ -50,11 +50,11 @@ public class CommentsController {
 
     }
 
-    @GetMapping("/from_product/{product_slug}")
-    public CommentListResponse index(@PathVariable("product_slug") String slug,
+    @GetMapping("/from_product/{slug}")
+    public CommentListResponse index(@PathVariable("slug") String slug,
                                      HttpServletRequest request,
                                      @RequestParam(value = "page", defaultValue = "1") int page,
-                                     @RequestParam(value = "page_size", defaultValue = "30") int pageSize) {
+                                     @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
 
         Page<Comment> commentsPage = this.commentsService.getCommentsFromProductWithSlug(slug, page, pageSize);
         return CommentListResponse.build(commentsPage, "");
@@ -70,7 +70,7 @@ public class CommentsController {
     public CommentListResponse fromUser(@PathVariable("user_id") Long id, Model model,
                                         HttpServletRequest request,
                                         @RequestParam(value = "page", defaultValue = "1") int page,
-                                        @RequestParam(value = "page_size", defaultValue = "30") int pageSize) {
+                                        @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
 
         User user = this.usersService.findById(id);
         Page<Comment> comments = this.commentsService.getCommentsFromUserWithId(user.getId(), page, pageSize);

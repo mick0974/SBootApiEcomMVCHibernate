@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SingleCategoryDto extends AppResponse {
-
-
     private Long id;
 
     private String name;

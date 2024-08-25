@@ -73,6 +73,13 @@ public class DbSeeder implements CommandLineRunner {
             this.rolesService.save(new Role(this.settingsService.getAdminRoleName()));
     }
 
+    private void createRoles() {
+        for (int i = 0; i < 30; i++) {
+            if (this.rolesService.getRoleDontThrow(Integer.toString(i)) == null)
+                this.rolesService.save(new Role(Integer.toString(i)));
+        }
+    }
+
     private void createAdminUser() {
         //User user = userService.findByEmailNoException(settingsService.getDefaultAdminEmail());
         User user = userService.findByUsernameNoException(settingsService.getDefaultAdminUsername());
@@ -87,6 +94,33 @@ public class DbSeeder implements CommandLineRunner {
                     settingsService.getDefaultAdminPassword(),
                     roles));
         }
+
+        user = userService.findByUsernameNoException("admin2");
+        if (user == null) {
+            HashSet<Role> roles = new HashSet<>();
+            roles.add(this.rolesService.getRoleOrThrow(this.settingsService.getAdminRoleName()));
+
+            this.userService.createUser(new User(settingsService.getDefaultAdminFirstName() + "2",
+                    settingsService.getDefaultAdminLastName() + "2",
+                    settingsService.getDefaultAdminEmail() + "2",
+                    settingsService.getDefaultAdminUsername() + "2",
+                    settingsService.getDefaultAdminPassword(),
+                    roles));
+        }
+
+        user = userService.findByUsernameNoException("admin3");
+        if (user == null) {
+            HashSet<Role> roles = new HashSet<>();
+            roles.add(this.rolesService.getRoleOrThrow(this.settingsService.getAdminRoleName()));
+
+            this.userService.createUser(new User(settingsService.getDefaultAdminFirstName() + "3",
+                    settingsService.getDefaultAdminLastName() + "3",
+                    settingsService.getDefaultAdminEmail() + "3",
+                    settingsService.getDefaultAdminUsername() + "3",
+                    settingsService.getDefaultAdminPassword(),
+                    roles));
+        }
+
     }
 
     public void seedUsers() {
@@ -249,6 +283,7 @@ public class DbSeeder implements CommandLineRunner {
         seedOrders();
         seedComments();
         seedFileUploads();
+        createRoles();
         System.out.println("Seeding finished");
     }
 

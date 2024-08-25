@@ -30,6 +30,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -66,7 +67,7 @@ public class ProductsController {
 
     @GetMapping
     public ProductListResponse index(@RequestParam(value = "page", defaultValue = "1") int page,
-                                     @RequestParam(value = "page_size", defaultValue = "8") int pageSize,
+                                     @RequestParam(value = "page_size", defaultValue = "500") int pageSize,
                                      HttpServletRequest request) {
 
         Page<Product> productsPage = productsService.findAllForSummary(page, pageSize);
@@ -79,7 +80,7 @@ public class ProductsController {
     public ProductListResponse getProductsByTag(@PathVariable(name = "tag_name", required = false) String tagName,
                                                 HttpServletRequest request,
                                                 @RequestParam(value = "page", defaultValue = "1") int page,
-                                                @RequestParam(value = "page_size", defaultValue = "5") int pageSize) {
+                                                @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
 
 
         Page<Product> productsPage = productsService.findByTagName(tagName, page, pageSize);
@@ -91,7 +92,7 @@ public class ProductsController {
     public ProductListResponse getByCategory(@PathVariable(name = "category_name", required = false) String categoryName,
                                              HttpServletRequest request,
                                              @RequestParam(value = "page", defaultValue = "1") int page,
-                                             @RequestParam(value = "page_size", defaultValue = "5") int pageSize) {
+                                             @RequestParam(value = "page_size", defaultValue = "500") int pageSize) {
 
         Page<Product> productsPage = productsService.getByCategory(categoryName, page, pageSize);
         return ProductListResponse.build(productsPage, request.getRequestURI());
@@ -113,8 +114,8 @@ public class ProductsController {
 
     }
 
-    @GetMapping("by_id/{id}")
-    public SingleProductResponse show(@PathVariable("id") Long id) {
+    @GetMapping("by_id/{product_id}")
+    public SingleProductResponse show(@PathVariable("product_id") Long id) {
         Product product = productsService.findById(id);
         return SingleProductResponse.build(product);
 
@@ -133,8 +134,8 @@ public class ProductsController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<AppResponse> create(HttpServletRequest request,
-                                              @RequestParam("images[]") MultipartFile[] uploadingFiles) throws IOException {
+    //public ResponseEntity<AppResponse> create(HttpServletRequest request, @RequestParam("images[]") MultipartFile[] uploadingFiles) throws IOException {
+    public ResponseEntity<AppResponse> create(HttpServletRequest request, @RequestParam(name="images[]", required = false) MultipartFile[] uploadingFiles) throws IOException {
 
         /* // TODO: fix this, the regex does not seem to work
         Enumeration<String> paramNames = request.getParameterNames();
@@ -174,6 +175,8 @@ public class ProductsController {
                 product.setPrice(Double.parseDouble(value[0]));
             if (key.equalsIgnoreCase("stock"))
                 product.setStock(Integer.parseInt(value[0]));
+            if (key.equalsIgnoreCase("slug"))
+                product.setSlug(value[0]);
 
             // TODO: improve this, I tried to use regex but it does not work, someone knows why?
             if (key.startsWith("tags[")) {
@@ -187,7 +190,8 @@ public class ProductsController {
             }
         });
 
-        List<File> files = storageService.upload(uploadingFiles, "/images/products");
+        //List<File> files = storageService.upload(uploadingFiles, "/images/products");
+        List<File> files = new LinkedList<>();
 
         productsService.createWithDetachedTagsAndCategories(product, files);
         return new ResponseEntity<>(SingleProductResponse.build(product), HttpStatus.CREATED);

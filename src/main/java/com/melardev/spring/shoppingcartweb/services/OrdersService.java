@@ -209,9 +209,16 @@ public class OrdersService implements IOrderService {
 
     public Order update(Long id, AdminOrderUpdateDto form) {
         //Order order = findById(id);
-        Order order = ordersRepository.getOne(id);
-        order.setTrackingNumber(form.getTrackingNumber());
-        order.setOrderStatus(form.getOrderStatus());
-        return ordersRepository.save(order);
+        Optional<Order> order_opt = ordersRepository.findById(id);
+        if (order_opt.isPresent()) {
+            Order order = order_opt.get();
+            System.out.println(">>>>>>>>>>>>>>> " + order.getId());
+            order.setTrackingNumber(form.getTrackingNumber());
+            System.out.println(">>>>>>>>>>>>>>> " + form.getTrackingNumber());
+            order.setOrderStatus(form.getOrderStatus());
+            System.out.println(">>>>>>>>>>>>>>> " + form.getOrderStatus());
+            return ordersRepository.save(order);
+        }
+        return null;
     }
 }
